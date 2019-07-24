@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Rain","Bird" ],
+    "billRange": [ "23", "28" ],
+    "billSpeed": [ "1.4", "2.0" ]
+}

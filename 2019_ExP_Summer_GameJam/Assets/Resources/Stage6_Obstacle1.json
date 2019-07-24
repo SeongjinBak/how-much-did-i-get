@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Rain",
+            "startSoundSecond": [ "4.0", "4.0" ],
+            "endSoundSecond": [ "18.0", "20.0" ],
+            "startSoundGap": "15.0",
+            "startSoundProb": "1.0",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "None" ],
+    "billRange": [ "6", "8" ],
+    "billSpeed": [ "1.2", "1.4" ]
+}

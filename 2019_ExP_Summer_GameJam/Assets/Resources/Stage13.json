@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Recorder"],
+    "billRange": [ "55", "57" ],
+    "billSpeed": [ "1.8", "2.7" ]
+}

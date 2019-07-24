@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Cat",
+            "startSoundSecond": [ "6.5", "7.5" ],
+            "endSoundSecond": [ "22.0", "27.0" ],
+            "startSoundGap": "4.0",
+            "startSoundProb": "0.75",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

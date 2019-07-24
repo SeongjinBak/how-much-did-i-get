@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Chicken",
+            "startSoundSecond": [ "4.0", "7.0" ],
+            "endSoundSecond": [ "24.0", "26.0" ],
+            "startSoundGap": "1.5",
+            "startSoundProb": "0.7",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

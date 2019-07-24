@@ -1,0 +1,10 @@
+﻿{
+    "obstacleName": "Dog",
+    "startSoundSecond": [ "1.0", "2.0" ],
+    "endSoundSecond": [ "6.0", "15.0" ],
+    "startSoundGap": "1.0",
+    "startSoundProb": "0.3",
+    "confirmedStartSoundSecond": "0.0",
+    "confirmedEndSoundSecond": "0.0"
+}
+  

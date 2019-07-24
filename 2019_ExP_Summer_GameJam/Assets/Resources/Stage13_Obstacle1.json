@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Recorder",
+            "startSoundSecond": [ "4.0", "4.0" ],
+            "endSoundSecond": [ "4.5", "4.5" ],
+            "startSoundGap": "0.6",
+            "startSoundProb": "1.0",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

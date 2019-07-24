@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Car",
+            "startSoundSecond": [ "4.0", "6.5" ],
+            "endSoundSecond": [ "18.0", "21.0" ],
+            "startSoundGap": "5.5",
+            "startSoundProb": "0.75",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

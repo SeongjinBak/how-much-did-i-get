@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Vibrate", "Chicken"],
+    "billRange": [ "38", "43" ],
+    "billSpeed": [ "1.8", "2.5" ]
+}

@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Noise",
+            "startSoundSecond": [ "5.0", "7.0" ],
+            "endSoundSecond": [ "14.0", "16.0" ],
+            "startSoundGap": "6.0",
+            "startSoundProb": "1.0",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

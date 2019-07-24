@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Chicken" ],
+    "billRange": [ "22", "25" ],
+    "billSpeed": [ "1.35", "2.4" ]
+}

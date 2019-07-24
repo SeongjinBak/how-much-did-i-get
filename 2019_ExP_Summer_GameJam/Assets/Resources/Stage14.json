@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Talk"],
+    "billRange": [ "75", "80" ],
+    "billSpeed": [ "1.0", "1.0" ]
+}

@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Bird",
+            "startSoundSecond": [ "7.0", "10.0" ],
+            "endSoundSecond": [ "22.0", "24.0" ],
+            "startSoundGap": "4.0",
+            "startSoundProb": "0.6",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  

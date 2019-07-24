@@ -1,0 +1,5 @@
+{
+    "stageObstacles": [ "Crunch", "Car" ],
+    "billRange": [ "27", "30" ],
+    "billSpeed": [ "1.5", "2.1" ]
+}

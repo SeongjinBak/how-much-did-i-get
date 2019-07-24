@@ -1,0 +1,10 @@
+        {
+            "obstacleName": "Fly",
+            "startSoundSecond": [ "6.0", "8.5" ],
+            "endSoundSecond": [ "22.0", "24.0" ],
+            "startSoundGap": "15.0",
+            "startSoundProb": "1.0",
+            "confirmedStartSoundSecond": "0.0",
+            "confirmedEndSoundSecond": "0.0"
+        }
+  
