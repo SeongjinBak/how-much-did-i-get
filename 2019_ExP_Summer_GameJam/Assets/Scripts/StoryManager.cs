@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿/*
+ * 사운드를 듣는 게임화면이 아닌 대화창 출력 및 라운드 정보 표현을 위한 클래스 입니다.
+ * 백그라운드 이미지, 애니메이션, 대화창 출력을 담당합니다.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,7 +11,6 @@ using UnityEngine.SceneManagement;
 
 public class StoryManager : MonoBehaviour
 {
-    //private bool isNameConfirm;
 
     // 이름 입력 창 2개(인풋필드, 버튼)
     public GameObject inputField, confirmButton;
@@ -39,7 +43,8 @@ public class StoryManager : MonoBehaviour
 
     // 페이드아웃
     public SpriteRenderer fadeOut;
-    // 오답인지, 정답인지
+
+    // 오답인지, 정답인지 지정
     private bool finish;
 
     private void Start()
@@ -64,24 +69,22 @@ public class StoryManager : MonoBehaviour
         if(randomBackGround == 0)
         {
             GameManager.instance.backgroundName = "InBank";
-           // backgroundSr.sprite = Resources.Load<Sprite>("InBank_A");
-           backgroundImage.sprite = Resources.Load<Sprite>("InBank_A");
+            backgroundImage.sprite = Resources.Load<Sprite>("InBank_A");
         }
         else
         {
             GameManager.instance.backgroundName = "OutBank";
-            //backgroundSr.sprite = Resources.Load<Sprite>("OutBank_A");
             backgroundImage.sprite = Resources.Load<Sprite>("OutBank_A");
         }
 
 
-
-       // isNameConfirm = false;
         inputField.SetActive(false);
         confirmButton.SetActive(false);
         finish = false;
 
         // 스테이지에 따라서 출력할 문자열들을 정해줌.
+        // 스테이지가 많지않고, 비슷한 내용의 대화를 하므로 하드코딩 하였음.
+        // 게임잼 특성상 마무리단계에서 시간을 많이 투자할 수 없었음.
         if(GameManager.instance.nowStage == 0)
         {
             myDialogues.Add("안녕하세요 시청자 여러분. 제가 지금 서 있는 곳은 서울의 한 은행입니다.");
@@ -114,35 +117,22 @@ public class StoryManager : MonoBehaviour
                 myDialogues.Add("자..잠깐만요..!");
             }
         }
+
         // 대화 코루틴 시작
         StartCoroutine(StartDialogue(GameManager.instance.nowStage));
     }
 
-    // 대화 출력
+    // 대화 출력하는 코루틴
     private IEnumerator StartDialogue(int stage)
     {
         yield return new WaitForSeconds(0.2f);
         dialogueText.text = "";
 
-
         int cnt = 0;
-        // 대화창 두번 눌림을 방지하기 위함(재수정필요)
+        // 대화창 두번 눌림을 방지하기 위함
         bool flag = false;
         while (cnt < myDialogues.Count && flag == false)
-        {/*
-            if(cnt == 2 && GameManager.instance.nowStage == 0)
-            {
-                inputField.SetActive(true);
-                confirmButton.SetActive(true);
-                while (isNameConfirm == false)
-                {
-                    yield return new WaitForSeconds(0.02f);
-                }
-                inputField.SetActive(false);
-                confirmButton.SetActive(false);
-
-            }
-            */
+        {
             if(GameManager.instance.nowStage == 0)
             {
                 if (cnt == 0 || cnt == 3 || cnt == 7 || cnt == 10)
@@ -231,7 +221,7 @@ public class StoryManager : MonoBehaviour
         StartCoroutine(Blinder());
     }
     
-
+    // Fade Out coroutine
     IEnumerator Blinder()
     {
         
@@ -240,7 +230,6 @@ public class StoryManager : MonoBehaviour
         {
             tmp.a += 0.01f;
             fadeOut.color = tmp;
-            //Debug.Log("페이드아웃중");
             yield return new WaitForSeconds(0.04f);
         }
         yield return new WaitForSeconds(0.7f);
@@ -266,7 +255,5 @@ public class StoryManager : MonoBehaviour
     public void NameClicked()
     {
         GameManager.instance.playerName = playerNameInput.text;
-      //  isNameConfirm = true;
-      //  isNameConfirm = true;
     }
 }
