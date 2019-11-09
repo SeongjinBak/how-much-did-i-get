@@ -1,4 +1,7 @@
-﻿
+﻿/*
+ * Json 양식으로 받게 될 Obstacle의 명세 입니다.
+ */
+
 using UnityEngine;
 [SerializeField]
 public class ObstacleInfo 
@@ -19,7 +22,7 @@ public class ObstacleInfo
     public float[] endSoundSecond;
 
 
-    // 확정된 것들
+    // 확정된 것들 ( 사운드 시작 시간, 사운드 마감 시간)
     public float confirmedStartSoundSecond;
     public float confirmedEndSoundSecond;
 

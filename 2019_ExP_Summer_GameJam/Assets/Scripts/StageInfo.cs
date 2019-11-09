@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*
+ * Json 양식으로 받게 될 스테이지의 명세 입니다.
+ */ 
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [SerializeField]
