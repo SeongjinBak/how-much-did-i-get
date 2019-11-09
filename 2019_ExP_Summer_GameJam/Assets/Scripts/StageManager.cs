@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿/*
+ * 스테이지 씬을 관리하는 매니저 클래스 입니다.
+ * 게임 초기정보 세팅, 매 라운드 별 사운드 재생, 답 후보 제시 등을 담당합니다.
+ */
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 public class StageManager : MonoBehaviour
 {
-
-   
-   
-
     // 스테이지 정보
     [SerializeField]
     public StageInfo stageInfo;
@@ -52,29 +53,25 @@ public class StageManager : MonoBehaviour
     public SpriteRenderer backgroundSr;
     public Image backgroundImage;
 
-    // 안대 쓴 상태(블라인더 상태)에서는 캐릭터들이 안보이게끔 하자.
+    // 안대 쓴 상태(블라인더 상태)에서는 캐릭터들이 안보이게끔 한다.
     public GameObject male;
     // 여자 캐릭터 없애버림
     public GameObject female;
 
-    // 제몇회
+    // 몇회인지 알려주는 텍스트
     public Text episode;
 
-    
-
-
     [SerializeField]
-    // 14스테이지에서 몇번 세었는지를 저장하는 변수
+    // 14스테이지에서 몇번 세었는지를 저장하는 변수 (하이라이트 부분이므로 하드코딩)
     private int countFor14 =0;
 
     private void OnEnable()
     {
 
-        // 스크립트 처음 시작시 여자 남자 캐릭터 꺼놓음.
+        // 스크립트 처음 시작시 여자 남자 캐릭터 꺼놓는다.
         male.SetActive(false);
         female.SetActive(false);
-
-
+        // 몇 회인지 UI에 출력.
         episode.text = GameManager.instance.nowStage.ToString();
         // 게임 시작시 bgm 끈다
         GameManager.instance.bgm.enabled = false;
@@ -88,8 +85,9 @@ public class StageManager : MonoBehaviour
 
 
         stageInfo = new StageInfo();
-        if(GameManager.instance == null) Debug.Log("?!");
-        //GameManager.instance.nowStage = 2;
+        if(GameManager.instance == null)
+            Debug.Log("Null GameManager error.");
+        
         // 스테이지 정보를 얻어온다.
         GameManager.instance.LoadStageInfo(ref stageInfo);
 
@@ -104,10 +102,11 @@ public class StageManager : MonoBehaviour
         for (int audio = 0; audio < stageInfo.stageObstacles.Length; audio++)
         {
             string tmpName = stageInfo.obstaclesInfo[audio].obstacleName;
-            Debug.Log(tmpName+"/");
+
             if (tmpName != "None")
                 obstacleSound[audio] = Resources.Load<AudioClip>(tmpName);
         }
+
         // 돈 세는소리 오디오소스 지정
         billAudioSource = GameObject.Find("BillSound").GetComponent<AudioSource>();
         // 돈 세는소리 오디오클립
@@ -120,12 +119,12 @@ public class StageManager : MonoBehaviour
         {
             confirmedBillSpeed = 55f/confirmedBillNumber ;
         }
+
         // 장애물들의 값을 확정시키는 것.
         for (int i = 0; i < stageInfo.stageObstacles.Length; i++)
         {
             stageInfo.obstaclesInfo[i].confirmedStartSoundSecond = Random.Range(stageInfo.obstaclesInfo[i].startSoundSecond[0], stageInfo.obstaclesInfo[i].startSoundSecond[1]);
             stageInfo.obstaclesInfo[i].confirmedEndSoundSecond = Random.Range(stageInfo.obstaclesInfo[i].endSoundSecond[0], stageInfo.obstaclesInfo[i].endSoundSecond[1]);
-            Debug.Log(stageInfo.obstaclesInfo[i].confirmedStartSoundSecond + " " + stageInfo.obstaclesInfo[i].confirmedEndSoundSecond);
             // 각각의 갭 타이머 추가
             gapTimerList.Add(150f);
             // 최소한번 출력되었는지 판단변수
@@ -150,7 +149,7 @@ public class StageManager : MonoBehaviour
         float localBillTimer = 0f;
         float gapTime = timer;
         // 현재 종잇장의 개수가 확정된 종잇장의 개수보다 작을때
-        // 즉, 종잇장 세는 소리 들린다.
+        // 즉, 종잇장 세는 소리 들릴 때.
         while (GameManager.instance.nowStage == 14 || currentBillNumber < confirmedBillNumber)
         {
             if (GameManager.instance.nowStage == 14)
@@ -161,7 +160,7 @@ public class StageManager : MonoBehaviour
                 }
             }
             localBillTimer += Time.deltaTime;
-            //Debug.Log("localTime = " + localBillTimer);
+            
             // 확정된 종잇장의 매 속도마다 종잇장 세기 출력
             if (localBillTimer >= confirmedBillSpeed)
             {
@@ -173,7 +172,7 @@ public class StageManager : MonoBehaviour
                 }
                 else
                     billAudioSource.PlayOneShot(billSound);
-                Debug.Log("지폐 세는소리 출력," + " 시간 : " + timer + " 현재 지폐수 : " + currentBillNumber);
+             
                 // 종잇장 세는 속도 다시 확정
                 confirmedBillSpeed = 1 / Random.Range(stageInfo.billSpeed[0], stageInfo.billSpeed[1]);
                 if (GameManager.instance.nowStage == 14)
@@ -189,23 +188,17 @@ public class StageManager : MonoBehaviour
             // 장애물의 출력
             for (int i = 0; i < stageInfo.stageObstacles.Length; i++)
             {
-                //Debug.Log(stageInfo.stageObstacles.Length);
                 // 최소 대기시간을 넘겼을 때부터 장애물 소리가 출력 되게끔 분기 설정
                 // endsoundsecond 이후부터는(timer 가 confirmedEndSecond 보다 커진다면) 전혀 소리가 나면 안된다.
                 if (stageInfo.obstaclesInfo[i].confirmedStartSoundSecond < timer && timer < stageInfo.obstaclesInfo[i].confirmedEndSoundSecond)
-                {
-
-                    //Debug.Log(gapTime + stageInfo.obstaclesInfo[i].startSoundGap + " " + timer);
+                {  
                     // 난수로 생성한 확률변수가, 정해놓았던 확률보다 작거나 같을경우에만 사운드 출력, 갭 타이머 마다 확률계산함.
-                    //if (probability <= stageInfo.obstaclesInfo[i].startSoundProb && gapTime + stageInfo.obstaclesInfo[i].startSoundGap < timer )
                     if (probability <= stageInfo.obstaclesInfo[i].startSoundProb)
                     {
                         if (gapTimerList[i] > stageInfo.obstaclesInfo[i].startSoundGap)
                         {
                             // Start Obstacle Sound..
-                            // 몇번이던지 장애물 소리는 출력되었음/
                             isPlayed = true;
-                            Debug.Log(i + "장애물 출력 : " + stageInfo.obstaclesInfo[i].obstacleName + " 시간 : " + timer + " 확률 : " + probability);
                             // 장애물의 사운드 출력
                             if (stageInfo.obstaclesInfo[i].obstacleName != "None")
                             {
@@ -219,12 +212,11 @@ public class StageManager : MonoBehaviour
                                 gapInitialOutput[i] = true;
                             }
                         }
-
-
-
                     }
                 }
-            } // 장애물의 출력 반복문 종료
+            } 
+            
+            // 장애물의 출력 반복문 종료
             if (isPlayed == true)
             {
                 gapTime = timer;
@@ -272,15 +264,12 @@ public class StageManager : MonoBehaviour
         GameManager.instance.bgm.enabled = true;
         if (GameManager.instance.backgroundName == "InBank")
         {
-           // backgroundSr.sprite = Resources.Load<Sprite>("InBank_B");
            backgroundImage.sprite = Resources.Load<Sprite>("InBank_B");
         }
         else
         {
-           // backgroundSr.sprite = Resources.Load<Sprite>("OutBank_B");
             backgroundImage.sprite = Resources.Load<Sprite>("OutBank_B");
         }
-
 
         // 답 맞추는 경우 남여 캐릭터 켬
         male.SetActive(true);
@@ -295,29 +284,27 @@ public class StageManager : MonoBehaviour
         {
             female.SetActive(true);
         }
-            
-
-
+        
+        // 4지선다 중 하나에 정답을 저장.
         answerArray[answerNum] = confirmedBillNumber;
        
+        // 정답과 이웃한 수로 가짜답 생성한다.
         for (int i = 0; i < 4; i++)
         {
             if(i != answerNum)
             {
-                
                 if(i < answerNum)
                 {
-                    answerArray[i] = confirmedBillNumber - (answerNum - i);
-                    
+                    answerArray[i] = confirmedBillNumber - (answerNum - i); 
                 }
                 else
                 {
-                    answerArray[i] = confirmedBillNumber + (i - answerNum);
-                   
+                    answerArray[i] = confirmedBillNumber + (i - answerNum);  
                 }
             }
         }
-        // 정답들 이미지들 켠다.
+
+        // 답지용 이미지들 전부 켠다.
         for (int i = 0; i < 4; i++)
         {
             substitutes[i].SetActive(true);
@@ -325,22 +312,13 @@ public class StageManager : MonoBehaviour
         }
         theAnswerIs.SetActive(true);
         blinder.enabled = false;
-        /*
-        Debug.Log("답 : " + answerNum);
-        foreach (var item in answerArray)
-        {
-            Debug.Log(item);
-        }
-        */
-        
-
-
     }
     
 
     // Update is called once per frame
     void Update()
     {
+        // 매 Update문마다, 타이머 값 증가.
         timer += Time.deltaTime;
         for (int i = 0; i < stageInfo.stageObstacles.Length; i++)
         {
@@ -348,16 +326,15 @@ public class StageManager : MonoBehaviour
             {
                 gapTimerList[i] += Time.deltaTime;
             }
-            
         }
     }
 
 
+    // 버튼 클릭용 함수.
     public void Clicked_0()
     {
         if(0 == answerNum)
         {
-            Debug.Log("정답입니다");
             // 스테이지 1 증가
             GameManager.instance.nowStage++;
             GameManager.instance.isClear = true;
@@ -365,44 +342,39 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("오답!"); SceneManager.LoadScene("Story");
+            SceneManager.LoadScene("Story");
         }
     }
     public void Clicked_1()
     {
         if (1 == answerNum)
         {
-            Debug.Log("정답입니다");
             // 스테이지 1 증가
             GameManager.instance.nowStage++;
             GameManager.instance.isClear = true;
-            SceneManager.LoadScene("Story");
         }
         else
         {
-            Debug.Log("오답!"); SceneManager.LoadScene("Story");
+            SceneManager.LoadScene("Story");
         }
     }
     public void Clicked_2()
     {
         if (2 == answerNum)
         {
-            Debug.Log("정답입니다");
             // 스테이지 1 증가
             GameManager.instance.nowStage++;
             GameManager.instance.isClear = true;
-            SceneManager.LoadScene("Story");
         }
         else
         {
-            Debug.Log("오답!"); SceneManager.LoadScene("Story");
+            SceneManager.LoadScene("Story");
         }
     }
     public void Clicked_3()
     {
         if (3 == answerNum)
         {
-            Debug.Log("정답입니다");
             // 스테이지 1 증가
             GameManager.instance.nowStage++;
             GameManager.instance.isClear = true;
@@ -410,7 +382,7 @@ public class StageManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("오답!"); SceneManager.LoadScene("Story");
+            SceneManager.LoadScene("Story");
         }
     }
 
