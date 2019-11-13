@@ -1,6 +1,11 @@
 ﻿/*
+ * 
  * 스테이지 씬을 관리하는 매니저 클래스 입니다.
  * 게임 초기정보 세팅, 매 라운드 별 사운드 재생, 답 후보 제시 등을 담당합니다.
+ * 
+ * 스테이지 정보와 그 스테이지에서 출력할 사운드, 종잇장 넘기는 횟수, 횟수의 시간 차,
+ * 장애물 사운드, 그 장애물 사운드의 출력 주기 등을 Json 포맷으로 받아 와 각 변수에 배정 합니다.
+ * 
  */
 
 using System.Collections;
@@ -83,22 +88,22 @@ public class StageManager : MonoBehaviour
         theAnswerIs.SetActive(false);
 
 
-
+        // StageInfo 클래스를 생성한다.
         stageInfo = new StageInfo();
         if(GameManager.instance == null)
             Debug.Log("Null GameManager error.");
         
-        // 스테이지 정보를 얻어온다.
+        // LoadStageInfo()로, 해당 스테이지의 Json 파일을 받아오고, 반영한다.
         GameManager.instance.LoadStageInfo(ref stageInfo);
 
        
-        // 장애물의 오디오소스 지정
+        // 장애물의 오디오소스 지정. Json으로 받아온 장애물 사운드의 개수만큼 오디오 소스를 지정.
         for (int audio = 0; audio < stageInfo.stageObstacles.Length; audio++)
         {
             obstacleSource[audio] = GameObject.Find("Obstacle " + "(" + (audio + 1).ToString() + ")").GetComponent<AudioSource>();
         }
 
-        // 장애물의 오디오클립 지정
+        // 장애물의 Json으로 받아온 장애물 사운드 오디오클립 지정
         for (int audio = 0; audio < stageInfo.stageObstacles.Length; audio++)
         {
             string tmpName = stageInfo.obstaclesInfo[audio].obstacleName;
@@ -111,16 +116,17 @@ public class StageManager : MonoBehaviour
         billAudioSource = GameObject.Find("BillSound").GetComponent<AudioSource>();
         // 돈 세는소리 오디오클립
         billSound = Resources.Load<AudioClip>("Paper");
-        // 종잇장의 갯수 확정
+
+        // Json으로 받아와, 종잇장의 갯수 확정
         confirmedBillNumber = Random.Range(stageInfo.billRange[0], stageInfo.billRange[1]);
-        // 종잇장 세는 속도 확정
+        // Json으로 받아와, 종잇장 세는 속도 확정
         confirmedBillSpeed = 1 / Random.Range(stageInfo.billSpeed[0], stageInfo.billSpeed[1]);
         if (GameManager.instance.nowStage == 14)
         {
             confirmedBillSpeed = 55f/confirmedBillNumber ;
         }
 
-        // 장애물들의 값을 확정시키는 것.
+        // Json으로 받아와,장애물들의 값을 확정시키는 것.
         for (int i = 0; i < stageInfo.stageObstacles.Length; i++)
         {
             stageInfo.obstaclesInfo[i].confirmedStartSoundSecond = Random.Range(stageInfo.obstaclesInfo[i].startSoundSecond[0], stageInfo.obstaclesInfo[i].startSoundSecond[1]);
