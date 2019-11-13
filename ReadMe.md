@@ -7,4 +7,4 @@
 다운로드 링크 : https://play.google.com/store/apps/details?id=com.ExPStudio&hl=ko
 
 -------------------------------------------------------------------------------------------
-<iframe width="560" height="315" src="https://www.youtube.com/embed/O1W0ulXHIs8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/rr7ttwR0uTQ" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
