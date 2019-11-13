@@ -5,4 +5,5 @@
 이 프로젝트에서 프로그래밍 전체를 담당하였으며, 사운드, 기획자와 협업하여 매 라운드별로 하드코딩 하지 않고 Json양식으로 라운드 구성 정보를 받아와 그 명세대로 플레이하는 핵심 기능을 구현하였습니다.
 
 게임 설명 링크 : https://www.youtube.com/watch?v=rr7ttwR0uTQ
+
 다운로드 링크 : https://play.google.com/store/apps/details?id=com.ExPStudio&hl=ko
